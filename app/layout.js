@@ -1,10 +1,10 @@
-import "./globals.css";
+import './globals.css';
 
 export const metadata = {
-  title: "CJCCHUB - Filmes e Séries",
-  description: "Plataforma de streaming de filmes e séries",
+  title: 'CJCCHUB - Filmes e Séries',
+  description: 'Plataforma de streaming de filmes e séries',
   viewport: {
-    width: "device-width",
+    width: 'device-width',
     initialScale: 1,
     maximumScale: 5,
   },
