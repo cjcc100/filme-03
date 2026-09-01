@@ -1,0 +1,12 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "installCommand": "npm install",
+  "env": {
+    "NEXT_PUBLIC_BASE_URL": {
+      "description": "URL base do aplicativo (https://seu-projeto.vercel.app)",
+      "required": true
+    }
+  }
+}
