@@ -9,4 +9,9 @@ export const config = {
     baseUrl: 'https://api.themoviedb.org/3',
     imageBaseUrl: 'https://image.tmdb.org/t/p',
   },
+  streamtape: {
+    login: process.env.STREAMTAPE_LOGIN || '4db68bae5deec46b3a4b',
+    key: process.env.STREAMTAPE_KEY || 'a7azDDb68ACx8dP',
+    apiUrl: 'https://api.streamtape.com',
+  },
 }
