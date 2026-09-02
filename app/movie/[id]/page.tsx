@@ -289,15 +289,15 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
       <main className="flex-1">
         {/* Header do Filme - Netflix Style */}
         <section className="relative h-[70vh] overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/30 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/70 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/50 to-transparent z-10" />
           
           {backdropUrl ? (
             <Image
               src={backdropUrl}
               alt={title}
               fill
-              className="object-cover object-center"
+              className="object-cover"
               priority
             />
           ) : (
@@ -307,7 +307,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
           <div className="absolute bottom-0 left-0 right-0 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
             <div className="flex gap-8 items-end">
               {posterUrl && (
-                <div className="hidden md:block w-48 h-72 rounded-xl overflow-hidden shadow-2xl border-4 border-zinc-800">
+                <div className="hidden md:block w-48 h-72 rounded-lg overflow-hidden shadow-2xl">
                   <Image
                     src={posterUrl}
                     alt={title}
@@ -319,19 +319,19 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
               )}
               
               <div className="flex-1">
-                <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
+                <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
                   {title}
                 </h1>
                 
                 {movieData.tagline && (
-                  <p className="text-zinc-400 text-base mb-4 italic">
+                  <p className="text-zinc-400 text-lg mb-4 italic">
                     {movieData.tagline}
                   </p>
                 )}
                 
-                <div className="flex flex-wrap items-center gap-3 mb-6 text-sm">
+                <div className="flex flex-wrap items-center gap-4 mb-6">
                   <div className="flex items-center gap-2">
-                    <span className="text-green-400 font-bold text-base">{rating}</span>
+                    <span className="text-green-400 font-bold">{rating}</span>
                     <span className="text-zinc-400">Avaliação</span>
                   </div>
                   
@@ -351,10 +351,10 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                   <span className="text-zinc-300">{genres}</span>
                 </div>
                 
-                <div className="flex gap-3">
+                <div className="flex gap-4">
                   {streamtapeFileId ? (
-                    <button className="bg-orange-500 text-white px-6 py-2 rounded font-semibold text-sm hover:bg-orange-600 transition-colors flex items-center gap-2">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <button className="bg-gradient-to-r from-red-600 to-orange-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-red-700 hover:to-orange-600 transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:shadow-lg hover:shadow-red-500/50">
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z"/>
                       </svg>
                       Assistir
@@ -362,17 +362,17 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                   ) : (
                     <button 
                       disabled
-                      className="bg-zinc-600 text-zinc-400 px-6 py-2 rounded font-semibold text-sm cursor-not-allowed flex items-center gap-2"
+                      className="bg-zinc-600 text-zinc-400 px-8 py-3 rounded-lg font-semibold cursor-not-allowed flex items-center gap-2"
                     >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z"/>
                       </svg>
                       Indisponível
                     </button>
                   )}
                   
-                  <button className="bg-zinc-600/80 text-white px-6 py-2 rounded font-semibold text-sm hover:bg-zinc-600 transition-colors flex items-center gap-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <button className="bg-zinc-600/80 text-white px-8 py-3 rounded-lg font-semibold hover:bg-zinc-600 transition-colors flex items-center gap-2">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4"/>
                     </svg>
                     Minha Lista
@@ -385,46 +385,50 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
 
         {/* Sinopse */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h2 className="text-2xl font-bold text-white mb-4">Sinopse</h2>
-          <p className="text-zinc-300 text-base leading-relaxed mb-8">
-            {movieData.overview || 'Sinopse não disponível.'}
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-zinc-800/30 rounded-lg p-4">
-              <h3 className="text-zinc-400 text-xs mb-1">Avaliação</h3>
-              <p className="text-white font-semibold">{rating} / 10</p>
-              <p className="text-zinc-400 text-xs">{voteCount} votos</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="md:col-span-2">
+              <h2 className="text-2xl font-bold text-white mb-4">Sinopse</h2>
+              <p className="text-zinc-300 text-lg leading-relaxed">
+                {movieData.overview || 'Sinopse não disponível.'}
+              </p>
             </div>
             
-            <div className="bg-zinc-800/30 rounded-lg p-4">
-              <h3 className="text-zinc-400 text-xs mb-1">Duração</h3>
-              <p className="text-white font-semibold">{duration}</p>
-            </div>
-            
-            <div className="bg-zinc-800/30 rounded-lg p-4">
-              <h3 className="text-zinc-400 text-xs mb-1">Gêneros</h3>
-              <p className="text-white font-semibold">{genres}</p>
-            </div>
-            
-            <div className="bg-zinc-800/30 rounded-lg p-4">
-              <h3 className="text-zinc-400 text-xs mb-1">Lançamento</h3>
-              <p className="text-white font-semibold">{year}</p>
-            </div>
-            
-            {budget && (
-              <div className="bg-zinc-800/30 rounded-lg p-4">
-                <h3 className="text-zinc-400 text-xs mb-1">Orçamento</h3>
-                <p className="text-white font-semibold">{budget}</p>
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-zinc-400 text-sm mb-1">Avaliação</h3>
+                <p className="text-white font-semibold">{rating} / 10</p>
+                <p className="text-zinc-400 text-sm">{voteCount} votos</p>
               </div>
-            )}
-            
-            {revenue && (
-              <div className="bg-zinc-800/30 rounded-lg p-4">
-                <h3 className="text-zinc-400 text-xs mb-1">Receita</h3>
-                <p className="text-white font-semibold">{revenue}</p>
+              
+              <div>
+                <h3 className="text-zinc-400 text-sm mb-1">Duração</h3>
+                <p className="text-white font-semibold">{duration}</p>
               </div>
-            )}
+              
+              <div>
+                <h3 className="text-zinc-400 text-sm mb-1">Gêneros</h3>
+                <p className="text-white font-semibold">{genres}</p>
+              </div>
+              
+              <div>
+                <h3 className="text-zinc-400 text-sm mb-1">Lançamento</h3>
+                <p className="text-white font-semibold">{year}</p>
+              </div>
+              
+              {budget && (
+                <div>
+                  <h3 className="text-zinc-400 text-sm mb-1">Orçamento</h3>
+                  <p className="text-white font-semibold">{budget}</p>
+                </div>
+              )}
+              
+              {revenue && (
+                <div>
+                  <h3 className="text-zinc-400 text-sm mb-1">Receita</h3>
+                  <p className="text-white font-semibold">{revenue}</p>
+                </div>
+              )}
+            </div>
           </div>
         </section>
 
