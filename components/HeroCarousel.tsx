@@ -7,6 +7,7 @@ import Link from 'next/link';
 interface Movie {
   id?: number;
   guid?: string;
+  linkid?: string;
   title?: string;
   name?: string;
   originalFilename?: string;
