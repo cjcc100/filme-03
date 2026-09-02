@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import HeroCarousel from '../components/HeroCarousel'
 import { config } from '@/lib/config'
 
 // Mapeamento manual para filmes que dão problema na busca automática
@@ -100,7 +99,7 @@ async function getStreamtapeFiles() {
   }
 }
 
-export default async function Home() {
+export default async function FilmesPage() {
   const streamtapeData = await getStreamtapeFiles()
   
   // Usar arquivos do Streamtape
@@ -122,14 +121,18 @@ export default async function Home() {
     })
   )
   
-  const movies = enrichedFiles
-  const featuredMovies = movies.slice(0, 5)
+  // Filtrar apenas filmes (não séries)
+  const movies = enrichedFiles.filter((file: any) => {
+    const tmdbData = file.tmdbData
+    // Se tiver name e não title, provavelmente é série
+    return tmdbData?.title || (!tmdbData?.name && !tmdbData?.title)
+  })
 
   return (
     <>
-      <HeroCarousel movies={featuredMovies} />
-
-      <section className="container py-12">
+      <div className="container py-12">
+        <h1 className="text-3xl font-bold mb-8">Filmes</h1>
+        
         {movies.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-zinc-400 text-lg">Nenhum filme disponível no momento.</p>
@@ -182,7 +185,7 @@ export default async function Home() {
             })}
           </div>
         )}
-      </section>
+      </div>
     </>
   )
 }

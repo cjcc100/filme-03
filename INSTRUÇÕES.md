@@ -51,6 +51,8 @@ npm start
 
 - `app/page.tsx` - Página principal com carrossel e listagem de filmes
 - `app/layout.tsx` - Layout principal com header e navegação
+- `app/filmes/page.tsx` - Página dedicada de filmes
+- `app/series/page.tsx` - Página dedicada de séries
 - `components/HeroCarousel.tsx` - Componente de carrossel de filmes em destaque
 - `app/api/tmdb/route.ts` - API route para consultas ao TMDb
 - `app/api/streamtape/route.ts` - API route para buscar arquivos do Streamtape
@@ -60,17 +62,29 @@ npm start
 ## Funcionalidades Implementadas
 
 ✅ **Navegação** - Header com links para Início, Filmes e Séries
-✅ **Carrossel Hero** - Destaque dos 5 primeiros filmes com slideshow automático
+✅ **Carrossel Hero** - Destaque dos 5 primeiros filmes com:
+  - Imagem preenchendo toda a área
+  - Texto posicionado mais acima (15% do fundo)
+  - Botões "Assistir" e "Minha Lista" visíveis
+  - Slideshow automático a cada 5 segundos
+✅ **Página de Filmes** - Listagem dedicada de filmes
+✅ **Página de Séries** - Listagem dedicada de séries com badge "Série"
 ✅ **Integração TMDb** - Busca automática de informações dos filmes (poster, título, descrição)
 ✅ **Integração Streamtape** - Busca de arquivos disponíveis para streaming
 ✅ **Grid Responsivo** - Listagem de filmes em grid adaptável (2-5 colunas)
 ✅ **Mapeamento Manual** - Backup para filmes que falham na busca automática
+
+## Páginas Disponíveis
+
+- `/` - Página inicial com carrossel hero e grid de filmes
+- `/filmes` - Página dedicada apenas de filmes
+- `/series` - Página dedicada apenas de séries
 
 ## Próximos Passos
 
 Após testar localmente e confirmar que está funcionando, podemos:
 1. Adicionar página de detalhes do filme
 2. Implementar player de vídeo com Bunny CDN
-3. Adicionar páginas de Filmes e Séries separadas
-4. Implementar busca de filmes
-5. Adicionar sistema de favoritos/minha lista
+3. Adicionar sistema de busca de filmes
+4. Adicionar sistema de favoritos/minha lista
+5. Criar páginas de temporadas e episódios para séries
