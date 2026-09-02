@@ -289,8 +289,8 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
       <main className="flex-1">
         {/* Header do Filme - Netflix Style */}
         <section className="relative h-[70vh] overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/80 to-transparent z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/60 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/30 to-transparent z-10" />
           
           {backdropUrl ? (
             <Image
@@ -318,7 +318,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                 </div>
               )}
               
-              <div className="flex-1 max-w-2xl">
+              <div className="flex-1">
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
                   {title}
                 </h1>
@@ -351,9 +351,9 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                   <span className="text-zinc-300">{genres}</span>
                 </div>
                 
-                <div className="flex gap-3 mb-4">
+                <div className="flex gap-3">
                   {streamtapeFileId ? (
-                    <button className="bg-white text-zinc-900 px-6 py-2 rounded font-semibold text-sm hover:bg-zinc-100 transition-colors flex items-center gap-2">
+                    <button className="bg-orange-500 text-white px-6 py-2 rounded font-semibold text-sm hover:bg-orange-600 transition-colors flex items-center gap-2">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z"/>
                       </svg>
@@ -383,52 +383,48 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
           </div>
         </section>
 
-        {/* Sinopse e Informações */}
+        {/* Sinopse */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold text-white mb-4">Sinopse</h2>
-              <p className="text-zinc-300 text-base leading-relaxed">
-                {movieData.overview || 'Sinopse não disponível.'}
-              </p>
+          <h2 className="text-2xl font-bold text-white mb-4">Sinopse</h2>
+          <p className="text-zinc-300 text-base leading-relaxed mb-8">
+            {movieData.overview || 'Sinopse não disponível.'}
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-zinc-800/30 rounded-lg p-4">
+              <h3 className="text-zinc-400 text-xs mb-1">Avaliação</h3>
+              <p className="text-white font-semibold">{rating} / 10</p>
+              <p className="text-zinc-400 text-xs">{voteCount} votos</p>
             </div>
             
-            <div className="space-y-4">
-              <div className="bg-zinc-800/30 rounded-lg p-4">
-                <h3 className="text-zinc-400 text-xs mb-1">Avaliação</h3>
-                <p className="text-white font-semibold">{rating} / 10</p>
-                <p className="text-zinc-400 text-xs">{voteCount} votos</p>
-              </div>
-              
-              <div className="bg-zinc-800/30 rounded-lg p-4">
-                <h3 className="text-zinc-400 text-xs mb-1">Duração</h3>
-                <p className="text-white font-semibold">{duration}</p>
-              </div>
-              
-              <div className="bg-zinc-800/30 rounded-lg p-4">
-                <h3 className="text-zinc-400 text-xs mb-1">Gêneros</h3>
-                <p className="text-white font-semibold">{genres}</p>
-              </div>
-              
-              <div className="bg-zinc-800/30 rounded-lg p-4">
-                <h3 className="text-zinc-400 text-xs mb-1">Lançamento</h3>
-                <p className="text-white font-semibold">{year}</p>
-              </div>
-              
-              {budget && (
-                <div className="bg-zinc-800/30 rounded-lg p-4">
-                  <h3 className="text-zinc-400 text-xs mb-1">Orçamento</h3>
-                  <p className="text-white font-semibold">{budget}</p>
-                </div>
-              )}
-              
-              {revenue && (
-                <div className="bg-zinc-800/30 rounded-lg p-4">
-                  <h3 className="text-zinc-400 text-xs mb-1">Receita</h3>
-                  <p className="text-white font-semibold">{revenue}</p>
-                </div>
-              )}
+            <div className="bg-zinc-800/30 rounded-lg p-4">
+              <h3 className="text-zinc-400 text-xs mb-1">Duração</h3>
+              <p className="text-white font-semibold">{duration}</p>
             </div>
+            
+            <div className="bg-zinc-800/30 rounded-lg p-4">
+              <h3 className="text-zinc-400 text-xs mb-1">Gêneros</h3>
+              <p className="text-white font-semibold">{genres}</p>
+            </div>
+            
+            <div className="bg-zinc-800/30 rounded-lg p-4">
+              <h3 className="text-zinc-400 text-xs mb-1">Lançamento</h3>
+              <p className="text-white font-semibold">{year}</p>
+            </div>
+            
+            {budget && (
+              <div className="bg-zinc-800/30 rounded-lg p-4">
+                <h3 className="text-zinc-400 text-xs mb-1">Orçamento</h3>
+                <p className="text-white font-semibold">{budget}</p>
+              </div>
+            )}
+            
+            {revenue && (
+              <div className="bg-zinc-800/30 rounded-lg p-4">
+                <h3 className="text-zinc-400 text-xs mb-1">Receita</h3>
+                <p className="text-white font-semibold">{revenue}</p>
+              </div>
+            )}
           </div>
         </section>
 
