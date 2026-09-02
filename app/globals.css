@@ -310,10 +310,12 @@ a {
 /* Hero Carousel */
 .hero-carousel {
   position: relative;
-  height: 70vh;
-  min-height: 500px;
-  max-height: 800px;
+  width: 100%;
+  height: 100vh;
+  max-height: 900px;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 .hero-carousel-overlay {
@@ -325,6 +327,7 @@ a {
 
 .hero-carousel-slides {
   position: relative;
+  width: 100%;
   height: 100%;
 }
 
@@ -333,6 +336,8 @@ a {
   inset: 0;
   opacity: 0;
   transition: opacity 500ms;
+  width: 100%;
+  height: 100%;
 }
 
 .hero-carousel-slide.active {
@@ -576,4 +581,94 @@ a {
 
 .left-2 {
   left: 0.5rem;
+}
+
+/* Movie detail page styles */
+.h-\[50vh\] {
+  height: 50vh;
+}
+
+.min-h-\[400px\] {
+  min-height: 400px;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.md\:col-span-1 {
+  grid-column: span 1 / span 1;
+}
+
+.md\:col-span-2 {
+  grid-column: span 1 / span 1;
+}
+
+@media (min-width: 768px) {
+  .md\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+}
+
+.md\:col-span-3 {
+  grid-column: span 1 / span 1;
+}
+
+@media (min-width: 768px) {
+  .md\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.leading-relaxed {
+  line-height: 1.625;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bg-red-600 {
+  background-color: #dc2626;
+}
+
+.hover\:bg-red-700:hover {
+  background-color: #b91c1c;
+}
+
+/* Movie detail responsive layout */
+.movie-detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .movie-detail-grid {
+    flex-direction: row;
+  }
+}
+
+.movie-detail-poster {
+  flex: 0 0 auto;
+  max-width: 300px;
+}
+
+.movie-detail-info {
+  flex: 1;
 }

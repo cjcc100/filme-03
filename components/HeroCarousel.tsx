@@ -155,6 +155,16 @@ export default function HeroCarousel({ movies }: HeroCarouselProps) {
                 </svg>
                 Assistir
               </Link>
+            ) : currentMovie?.linkid ? (
+              <Link 
+                href={`/movie/${currentMovie.linkid}`}
+                className="hero-carousel-btn hero-carousel-btn-primary"
+              >
+                <svg className="hero-carousel-btn-icon" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                </svg>
+                Assistir
+              </Link>
             ) : (
               <button className="hero-carousel-btn hero-carousel-btn-primary">
                 <svg className="hero-carousel-btn-icon" fill="currentColor" viewBox="0 0 20 20">

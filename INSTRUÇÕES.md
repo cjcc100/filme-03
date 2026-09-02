@@ -63,12 +63,19 @@ npm start
 
 ✅ **Navegação** - Header com links para Início, Filmes e Séries
 ✅ **Carrossel Hero** - Destaque dos 5 primeiros filmes com:
-  - Imagem preenchendo toda a área
+  - Imagem preenchendo 100vh da tela (altura total)
   - Texto posicionado mais acima (15% do fundo)
   - Botões "Assistir" e "Minha Lista" visíveis
   - Slideshow automático a cada 5 segundos
-✅ **Página de Filmes** - Listagem dedicada de filmes
+✅ **Página de Filmes** - Listagem dedicada de filmes com links para detalhes
 ✅ **Página de Séries** - Listagem dedicada de séries com badge "Série"
+✅ **Página de Detalhes do Filme** - Página `/movie/[id]` com:
+  - Backdrop grande
+  - Poster do filme
+  - Informações completas (título, ano, avaliação, duração, gêneros)
+  - Sinopse
+  - Botão de reprodução (quando disponível no Streamtape)
+  - Layout responsivo (coluna em mobile, lado a lado em desktop)
 ✅ **Integração TMDb** - Busca automática de informações dos filmes (poster, título, descrição)
 ✅ **Integração Streamtape** - Busca de arquivos disponíveis para streaming
 ✅ **Grid Responsivo** - Listagem de filmes em grid adaptável (2-5 colunas)
@@ -76,9 +83,10 @@ npm start
 
 ## Páginas Disponíveis
 
-- `/` - Página inicial com carrossel hero e grid de filmes
+- `/` - Página inicial com carrossel hero (100vh) e grid de filmes
 - `/filmes` - Página dedicada apenas de filmes
 - `/series` - Página dedicada apenas de séries
+- `/movie/[id]` - Página de detalhes do filme (aceita ID do TMDb ou file ID do Streamtape)
 
 ## Próximos Passos
 

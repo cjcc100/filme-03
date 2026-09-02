@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import Link from 'next/link'
+import Header from '../components/Header'
 import HeroCarousel from '../components/HeroCarousel'
 import { config } from '@/lib/config'
 
@@ -127,6 +129,7 @@ export default async function Home() {
 
   return (
     <>
+      <Header />
       <HeroCarousel movies={featuredMovies} />
 
       <section className="container py-12">
@@ -148,10 +151,14 @@ export default async function Home() {
               const title = tmdbData?.title || tmdbData?.name || movie.title || movie.name || 'Sem título'
               const year = tmdbData?.release_date?.split('-')[0] || tmdbData?.first_air_date?.split('-')[0] || 'N/A'
               const rating = tmdbData?.vote_average?.toFixed(1) || 'N/A'
+              
+              // Usar ID do TMDb se disponível, senão usar linkid do Streamtape
+              const movieId = tmdbData?.id || movie.linkid
 
               return (
-                <div 
+                <Link 
                   key={movie.linkid || movie.id}
+                  href={`/movie/${movieId}`}
                   className="bg-zinc-800 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105"
                 >
                   <div className="relative aspect-[2/3]">
@@ -177,7 +184,7 @@ export default async function Home() {
                     </h3>
                     <p className="text-zinc-400 text-xs">{year}</p>
                   </div>
-                </div>
+                </Link>
               )
             })}
           </div>

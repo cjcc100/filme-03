@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Header from '../../components/Header'
 import { config } from '@/lib/config'
 
 async function getStreamtapeFolders() {
@@ -128,6 +129,7 @@ export default async function SeriesPage() {
 
   return (
     <>
+      <Header />
       <div className="container py-12">
         <h1 className="text-3xl font-bold mb-8">Séries</h1>
         
