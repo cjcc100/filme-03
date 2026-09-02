@@ -32,6 +32,20 @@ interface MovieData {
   tagline?: string;
   budget?: number;
   revenue?: number;
+  production_companies?: Array<{
+    id: number;
+    name: string;
+    logo_path?: string;
+  }>;
+  production_countries?: Array<{
+    iso_3166_1: string;
+    name: string;
+  }>;
+  spoken_languages?: Array<{
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+  }>;
 }
 
 async function getMovieData(movieId: string): Promise<MovieData | null> {
@@ -250,100 +264,225 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
     )
   }
 
+  const title = movieData.title || movieData.original_title || 'Sem título'
+  const year = movieData.release_date?.split('-')[0] || 'N/A'
+  const rating = movieData.vote_average?.toFixed(1) || 'N/A'
+  const duration = movieData.runtime ? `${Math.floor(movieData.runtime / 60)}h ${movieData.runtime % 60}m` : 'N/A'
+  const genres = movieData.genres?.map(g => g.name).join(', ') || 'N/A'
+  const voteCount = movieData.vote_count?.toLocaleString() || '0'
+  
   const backdropUrl = movieData.backdrop_path
     ? `https://image.tmdb.org/t/p/original${movieData.backdrop_path}`
     : null
-
+    
   const posterUrl = movieData.poster_path
     ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
     : null
 
-  const title = movieData.title || movieData.original_title || 'Sem título'
-  const year = movieData.release_date?.split('-')[0] || 'N/A'
-  const rating = movieData.vote_average?.toFixed(1) || 'N/A'
-  const runtime = movieData.runtime ? `${Math.floor(movieData.runtime / 60)}h ${movieData.runtime % 60}m` : 'N/A'
-  const genres = movieData.genres?.map(g => g.name).join(', ') || 'N/A'
+  const budget = movieData.budget ? `$${movieData.budget.toLocaleString()}` : null
+  const revenue = movieData.revenue ? `$${movieData.revenue.toLocaleString()}` : null
 
   return (
     <>
       <Header />
       
-      {/* Backdrop */}
-      {backdropUrl && (
-        <div className="relative h-[50vh] min-h-[400px]">
-          <Image
-            src={backdropUrl}
-            alt={title}
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent" />
-        </div>
-      )}
-
-      <div className="container py-12">
-        <div className="movie-detail-grid">
-          {/* Poster */}
-          <div className="movie-detail-poster">
-            {posterUrl ? (
-              <div className="relative aspect-[2/3] rounded-xl overflow-hidden">
-                <Image
-                  src={posterUrl}
-                  alt={title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ) : (
-              <div className="aspect-[2/3] bg-zinc-800 rounded-xl flex items-center justify-center">
-                <span className="text-zinc-500">Sem imagem</span>
-              </div>
-            )}
-          </div>
-
-          {/* Info */}
-          <div className="movie-detail-info">
-            <h1 className="text-4xl font-bold text-white mb-4">{title}</h1>
-            
-            <div className="flex flex-wrap gap-4 mb-6">
-              <div className="text-zinc-300">
-                <span className="text-zinc-500">Ano:</span> {year}
-              </div>
-              <div className="text-zinc-300">
-                <span className="text-zinc-500">Avaliação:</span> {rating}/10
-              </div>
-              <div className="text-zinc-300">
-                <span className="text-zinc-500">Duração:</span> {runtime}
-              </div>
-              <div className="text-zinc-300">
-                <span className="text-zinc-500">Gêneros:</span> {genres}
+      <main className="flex-1">
+        {/* Header do Filme - Netflix Style */}
+        <section className="relative h-[70vh] overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/70 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/50 to-transparent z-10" />
+          
+          {backdropUrl ? (
+            <Image
+              src={backdropUrl}
+              alt={title}
+              fill
+              className="object-cover"
+              priority
+            />
+          ) : (
+            <div className="w-full h-full bg-zinc-800" />
+          )}
+          
+          <div className="absolute bottom-0 left-0 right-0 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+            <div className="flex gap-8 items-end">
+              {posterUrl && (
+                <div className="hidden md:block w-48 h-72 rounded-lg overflow-hidden shadow-2xl">
+                  <Image
+                    src={posterUrl}
+                    alt={title}
+                    width={192}
+                    height={288}
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              
+              <div className="flex-1">
+                <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+                  {title}
+                </h1>
+                
+                {movieData.tagline && (
+                  <p className="text-zinc-400 text-lg mb-4 italic">
+                    {movieData.tagline}
+                  </p>
+                )}
+                
+                <div className="flex flex-wrap items-center gap-4 mb-6">
+                  <div className="flex items-center gap-2">
+                    <span className="text-green-400 font-bold">{rating}</span>
+                    <span className="text-zinc-400">Avaliação</span>
+                  </div>
+                  
+                  <span className="text-zinc-400">•</span>
+                  
+                  <span className="text-zinc-300">{year}</span>
+                  
+                  {duration !== 'N/A' && (
+                    <>
+                      <span className="text-zinc-400">•</span>
+                      <span className="text-zinc-300">{duration}</span>
+                    </>
+                  )}
+                  
+                  <span className="text-zinc-400">•</span>
+                  
+                  <span className="text-zinc-300">{genres}</span>
+                </div>
+                
+                <div className="flex gap-4">
+                  {streamtapeFileId ? (
+                    <button className="bg-gradient-to-r from-red-600 to-orange-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-red-700 hover:to-orange-600 transition-all duration-300 flex items-center gap-2">
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                      Assistir
+                    </button>
+                  ) : (
+                    <button 
+                      disabled
+                      className="bg-zinc-600 text-zinc-400 px-8 py-3 rounded-lg font-semibold cursor-not-allowed flex items-center gap-2"
+                    >
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                      Indisponível
+                    </button>
+                  )}
+                  
+                  <button className="bg-zinc-600/80 text-white px-8 py-3 rounded-lg font-semibold hover:bg-zinc-600 transition-colors flex items-center gap-2">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Minha Lista
+                  </button>
+                </div>
               </div>
             </div>
-
-            {movieData.tagline && (
-              <p className="text-zinc-400 italic mb-6">"{movieData.tagline}"</p>
-            )}
-
-            <h2 className="text-xl font-semibold text-white mb-3">Sinopse</h2>
-            <p className="text-zinc-300 leading-relaxed mb-8">
-              {movieData.overview || 'Sinopse não disponível.'}
-            </p>
-
-            {streamtapeFileId && (
-              <div className="bg-zinc-800 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-white mb-4">Assistir Agora</h3>
-                <p className="text-zinc-400 mb-4">
-                  Este filme está disponível para streaming.
-                </p>
-                <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
-                  Reproduzir
-                </button>
-              </div>
-            )}
           </div>
-        </div>
-      </div>
+        </section>
+
+        {/* Sinopse */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="md:col-span-2">
+              <h2 className="text-2xl font-bold text-white mb-4">Sinopse</h2>
+              <p className="text-zinc-300 text-lg leading-relaxed">
+                {movieData.overview || 'Sinopse não disponível.'}
+              </p>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-zinc-400 text-sm mb-1">Avaliação</h3>
+                <p className="text-white font-semibold">{rating} / 10</p>
+                <p className="text-zinc-400 text-sm">{voteCount} votos</p>
+              </div>
+              
+              <div>
+                <h3 className="text-zinc-400 text-sm mb-1">Duração</h3>
+                <p className="text-white font-semibold">{duration}</p>
+              </div>
+              
+              <div>
+                <h3 className="text-zinc-400 text-sm mb-1">Gêneros</h3>
+                <p className="text-white font-semibold">{genres}</p>
+              </div>
+              
+              <div>
+                <h3 className="text-zinc-400 text-sm mb-1">Lançamento</h3>
+                <p className="text-white font-semibold">{year}</p>
+              </div>
+              
+              {budget && (
+                <div>
+                  <h3 className="text-zinc-400 text-sm mb-1">Orçamento</h3>
+                  <p className="text-white font-semibold">{budget}</p>
+                </div>
+              )}
+              
+              {revenue && (
+                <div>
+                  <h3 className="text-zinc-400 text-sm mb-1">Receita</h3>
+                  <p className="text-white font-semibold">{revenue}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Empresas de Produção */}
+        {movieData.production_companies && movieData.production_companies.length > 0 && (
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 className="text-2xl font-bold text-white mb-6">Empresas de Produção</h2>
+            <div className="flex flex-wrap gap-4">
+              {movieData.production_companies.map((company) => (
+                <div key={company.id} className="bg-zinc-800/50 rounded-lg p-4 flex items-center gap-4">
+                  {company.logo_path && (
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
+                      alt={company.name}
+                      width={50}
+                      height={50}
+                      className="object-contain"
+                    />
+                  )}
+                  <span className="text-white font-medium">{company.name}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Países de Produção */}
+        {movieData.production_countries && movieData.production_countries.length > 0 && (
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 className="text-2xl font-bold text-white mb-6">Países de Produção</h2>
+            <div className="flex flex-wrap gap-2">
+              {movieData.production_countries.map((country, index) => (
+                <span key={index} className="bg-zinc-800/50 text-zinc-300 px-3 py-1 rounded-full text-sm">
+                  {country.name}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Idiomas */}
+        {movieData.spoken_languages && movieData.spoken_languages.length > 0 && (
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 className="text-2xl font-bold text-white mb-6">Idiomas</h2>
+            <div className="flex flex-wrap gap-2">
+              {movieData.spoken_languages.map((lang, index) => (
+                <span key={index} className="bg-zinc-800/50 text-zinc-300 px-3 py-1 rounded-full text-sm">
+                  {lang.english_name}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+      </main>
     </>
   )
 }
